@@ -3,50 +3,40 @@
 var pmx         = require('pmx');
 var pm2         = require('pm2');
 var _           = require('lodash');
-var utils       = require('yocto-utils');
 var os          = require('os');
 var fs          = require('fs');
 var async       = require('async');
 var logger      = require('yocto-logger');
-var interact    = require('./lib/interact');
 
 // Init pmx module
 pmx.initModule({
   // Options related to the display style on Keymetrics
   widget : {
     // Logo displayed
-    logo : [ 'http://ddf912383141a8d7bbe4-e053e711fc85de3290f121ef0f0e3a1f.',
-              'r87.cf1.rackcdn.com/cloud-monitoring-icon.png' ].join('')
+    logo  : [ 'http://ddf912383141a8d7bbe4-e053e711fc85de3290f121ef0f0e3a1f.',
+              'r87.cf1.rackcdn.com/cloud-monitoring-icon.png' ].join(''),
     // Module colors
     // 0 = main element
     // 1 = secondary
     // 2 = main border
     // 3 = secondary border
     // Maybe need to custom this ?
-    theme            : [ '#141A1F', '#222222', '#3ff', '#3ff' ],
+    theme : [ '#141A1F', '#222222', '#3ff', '#3ff' ],
     // Section to show / hide
-    el : {
+    el    : {
       probes  : true,
       actions : true
     },
     // Main block to show / hide
     block : {
-      actions : false,
-      issues  : true,
-      meta    : true,
-      // Custom metrics to put in BIG
-      // no process
-      main_probes : [ ]
+      actions     : false,
+      issues      : true,
+      meta        : true
     }
   }
-}, function(err, conf) {
-  // start interact
-  interact.start();
-  // has a public for for interract
-  if (!_.isEmpty(conf.publicKey)) {
-    // send request
-    interact.listen();
-  }
+}, function (err, conf) {
+  // create interraction
+  var interact = require('./lib/interact')(conf);
 
   // default interval for cleaning
   var interval;
@@ -68,7 +58,7 @@ pmx.initModule({
   }
 
   /**
-   * Main function to 
+   * Main function to do main process
    */
   function doJob () {
     // connect to daemon ?
@@ -83,18 +73,23 @@ pmx.initModule({
 
         // complete data
         var complete = {
-          system  : {
+          system    : {
             hostname  : os.hostname(),
             uptime    : os.uptime()
           },
-          monit   : {
+          monit     : {
             loadavg     : os.loadavg(),
-            total_mem   : os.totalmem(),
-            free_mem    : os.freemem(),
+            memory      : {
+              total : os.totalmem(),
+              free  : os.freemem()
+            },
             cpu         : os.cpus(),
             interfaces  : os.networkInterfaces()
           },
-          process     : []
+          process   : [],
+          widget    : _.extend({},
+            _.pick(conf.widget, [ 'logo' ]),
+            _.pick(conf.widget, [ 'theme' ]))
         };
 
         // list all available process
@@ -144,7 +139,11 @@ pmx.initModule({
             });
           }, function () {
             // send data on local and to remote server
-            interact.send(complete);
+            interact.send({
+              publicKey   : conf.publicKey,
+              bucketKey   : conf.bucketKey,
+              monitoring  : complete
+            });
             // disconnect to God
             pm2.disconnect();
             // clear previous interval
@@ -153,9 +152,9 @@ pmx.initModule({
             interval = setInterval(doJob, conf.refresh || 10000);
           });
         });
-      };
+      }
     });
-  };
+  }
   // start all process
   doJob();
 });

@@ -23,7 +23,7 @@ pm2 install yocto-pm2-agent
 
 OR
 
-git clone 
+git clone https://github.com/yoctore/yocto-pm2-agent.git .
 cd yocto-pm2-agent
 npm install .
 
@@ -42,7 +42,7 @@ Here existing pm2 tools :
 - yocto-pm2-mongodb : `pm2 install yocto-pm2-mongodb` => based on `pm2-mongodb` with ssl, auth support.
 - yocto-pm2-iostat : `pm2 install yocto-pm2-iostat` => monitor iostat
 
-3 - Show logs on ``
+3 - Show logs on `pm2 logs yocto-pm2-agent`
 
 4 - If your need mode detail on logs, charts, and more representative graphic data create an account on our web plateform *(Comming soon)*
 
