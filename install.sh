@@ -34,7 +34,9 @@ rm master.zip
 cd yocto-pm2-agent
 info "Building yocto-pm2-agent ..."
 npm install --production
-info "Installing yocto-pm2-agent ..."
+info "Unistalling previous version of yocto-pm2-agent ..."
+pm2 uninstall yocto-pm2-agent
+info "Installing new version of yocto-pm2-agent ..."
 pm2 install .
 pass "Agent is installed ..."
 info "To interract with remote interface follow instructions below : 
