@@ -25,6 +25,7 @@ sudo npm install pm2@latest -g
 
 info "Global installation will processed on [ $HOME ]"
 # process installation
+info "Working on [ $HOME ]"
 cd $HOME
 info "Downloading sources ..."
 wget https://github.com/yoctore/yocto-pm2-agent/archive/master.zip

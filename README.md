@@ -19,24 +19,17 @@ This module is an custom monitoring agent for yocto project based on pm2 tools
 1 - Install yocto-pm2-agent
 
 ```javascript
-pm2 install yocto-pm2-agent
-
-OR
-
-git clone https://github.com/yoctore/yocto-pm2-agent.git .
-cd yocto-pm2-agent
-npm install .
-
+curl -sL https://raw.githubusercontent.com/yoctore/yocto-pm2-agent/master/install.sh | bash
 ```
 
 2 - Install pm2 modules or your custom module based on pm2 api.
 
-Here existing pm2 tools : 
+Here existing pm2 tools :
 
 - pm2-server-monit : `pm2 install pm2-server-monit` => Monitor server CPU / Memory / Process / Zombie Process / Disk size / Security Packages / Network Input / Network Output
 - pm2-log-rotate : `pm2 install pm2-log-rotate` => Automatically log rotate all applications logs managed by PM2
 - pm2-docker : `pm2 install pm2-docker` => probe for docker
-- pm2-mongodb : `pm2 install pm2-mobodb` => probe for mongodb
+- pm2-mongodb : `pm2 install pm2-mongodb` => probe for mongodb
 - pm2-redis : `pm2 install pm2-redis` => probe for redis
 - pm2-elasticsearch : `pm2 install pm2 pm2-elasticsearch` => probe for elasticsearch
 - yocto-pm2-mongodb : `pm2 install yocto-pm2-mongodb` => based on `pm2-mongodb` with ssl, auth support.
