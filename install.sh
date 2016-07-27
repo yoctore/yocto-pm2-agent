@@ -21,11 +21,11 @@ warn () {
 
 info "Installing pm2 globaly first ..."
 # install pm2 first
-#sudo npm install pm2@latest -g
+sudo npm install pm2@latest -g
 
 info "Global installation will processed on [ $HOME ]"
 # process installation
-cd ./temp
+cd $HOME
 info "Downloading sources ..."
 wget https://github.com/yoctore/yocto-pm2-agent/archive/master.zip
 unzip master.zip -d ./
