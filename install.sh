@@ -40,7 +40,14 @@ pm2 uninstall yocto-pm2-agent
 info "Installing new version of yocto-pm2-agent ..."
 pm2 install .
 pass "Agent is installed ..."
-info "To interract with remote interface follow instructions below : 
+info "To interract with a remote interface follow instructions below :
+
+****************************************************************************
+      THIS TOOLS CAN INTERACT WITH REMOTE TOOLS BASED ON SOCKET.IO
+               DATA WAS SENT ON A /monitoring CHANNEL
+
 - pm2 set yocto-pm2-agent:publicKey <YOUR_PUBLIC_KEY>
 - pm2 set yocto-pm2-agent:bucketKey <YOUR_BUCKET_KEY>
-- pm2 set yocto-pm2-agent:host <YOUR_SOCKET_HOST_URL>"
+- pm2 set yocto-pm2-agent:host <YOUR_SOCKET_HOST_URL>
+
+****************************************************************************"
