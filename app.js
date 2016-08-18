@@ -131,7 +131,7 @@ pmx.initModule({
 
               // normalize error to get lust the last item
               process.error = _.isArray(process.error) ? _.nth(process.error) : false;
-
+console.log(process);
               // push item on list
               complete.process.push(process);
               // go to the next item
